@@ -1,0 +1,43 @@
+﻿<div id="newsletter" class="section">
+
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="newsletter">
+                    <p>Phản hồi ý kiến của bạn cho <strong>CỬA HÀNG</strong></p>
+                    <form action="/Home/Complain/" method="get">
+                        @if (Session["UserID"] != null)
+                        {
+                            <input class="input" type="text" placeholder="Nhập ý kiến của bạn..." name="complain" required>
+                            <input type="submit" class="newsletter-btn" value="Gửi" />
+                        }
+                        else
+                        {
+                            <span style="font-size:1.5rem">Vui lòng <a href="/user/account/">đăng nhập</a> để gửi phản hồi</span>
+                        }
+                    </form>
+                    <ul class="newsletter-follow">
+                        <li>
+                            <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://www.pinterest.com/"><i class="fa fa-pinterest"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+        
+   

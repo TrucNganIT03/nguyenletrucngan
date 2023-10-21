@@ -1,0 +1,125 @@
+﻿<header>
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-left">
+                <li><a href="tel:0339430212" style="text-decoration: none"><i class="fa fa-phone"></i> 0339430212</a></li>
+                <li><a href="mailto:trucngan020411@gmail.com" style="text-decoration: none"><i class="fa fa-envelope-o"></i> trucngan020411@gmail.com</a></li>
+                <li><a href="https://goo.gl/maps/FaCxakhWPKqodrSK7" style="text-decoration: none"><i class="fa fa-map-marker"></i> 371 Nguyễn Kiệm</a></li>
+            </ul>
+            <ul class="header-links pull-right">
+                @if (Session["UserID"] == null)
+                {
+                    <li><a href="/user/account" style="text-decoration: none"><i class="fa fa-user-o"></i>Đăng nhập</a></li>
+                }
+                else
+                {
+                    User user = ShopThoiTrang.Controllers.DataController.getUserByID((int)Session["UserID"]);
+                    <li><a href="/user/index" style="text-decoration: none">Xin chào @user.FullName!!!</a></li>
+                    <li><a href="/user/logout" id="logout-link" style="text-decoration: none"><i class="fa fa-user-o"></i>Đăng xuất</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->  
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-4">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img src="~/Static/img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+                <!-- SEARCH BAR -->
+                <div class="col-md-4">
+                    <div class="header-search">
+                        <form action="/Shop/index" method="get">
+                            <input id="search-input" name="search" class="input" placeholder="Tìm kiếm theo nhãn sản phẩm..." required>
+                            <input id="search-button" type="submit" class="search-btn"  value="Tìm kiếm" style="text-align:center; cursor:pointer"/>
+                            
+                        </form>
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+                <!-- ACCOUNT -->
+                <div class="col-md-4 clearfix">
+                    <div class="header-ctn">
+                        <!-- Cart -->
+                        @{
+                            List<ShopThoiTrang.Models.CartItem> cart = (List<ShopThoiTrang.Models.CartItem>)Session["Cart"];
+
+                            if (cart == null)
+                            {
+                                cart = new List<ShopThoiTrang.Models.CartItem>();
+                            }
+                            int sum = 0;
+                            decimal temp = 0;
+                            foreach (ShopThoiTrang.Models.CartItem item in cart)
+                            {
+                                sum += item.Quantity;
+                                temp += item.Quantity * item.UnitPrice;
+                            }
+
+
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>Giỏ hàng</span>
+                                    <div class="qty">@sum</div>
+
+
+                                </a>
+                                <div class="cart-dropdown">
+                                    <div class="cart-list">
+                                        <!-- Giỏ hàng sẽ được thêm vào đây -->
+                                        @foreach(var item in cart){
+                                        <div class="product-widget">
+                                            <div class="product-img">
+                                                <img src="@item.ProductImage" alt="">
+                                            </div>
+                                            <div class="product-body">
+                                                <h3 class="product-name"><a href="/Shop/Details/@item.ProductID">@item.ProductName</a></h3>
+                                                <h4 class="product-price"><span class="qty">@(item.Quantity + "x")</span>@item.UnitPrice.ToString("#,##0 VND")</h4>
+                                            </div>
+                                            <button class="delete delete-item-cart" data-product-id="@item.ProductID"><i class="fa fa-close" style="margin-right:0px"></i></button>
+                                        </div>
+                                        }
+                                    </div>
+                                    <div class="cart-summary">
+                                        <small><span class="qty">@sum</span> sản phẩm được chọn</small>
+                                        <h5 id="cart-total" style="font-size: 1.5rem; padding-top: 0.2rem; font-family: Montserrat, sans-serif; font-weight:700">Tạm tính: @temp.ToString("#,##0 VND")</h5>
+                                    </div>
+                                    <div class="cart-btns">
+                                        <a class="delete-all-cart" style="cursor:pointer">Xóa toàn bộ</a>
+                                        <a href="~/cart">Thanh toán<i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- /Cart -->
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>
